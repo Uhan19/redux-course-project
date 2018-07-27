@@ -1,6 +1,6 @@
 // actions - whenever we want to change the state of app, we dispatch an action
-{
-    type: 'Add_TODO',
+const addTodo = {
+    type: 'ADD_TODO',
     todo: {
         id: 0,
         name: 'Learn Redux',
@@ -8,17 +8,17 @@
     }
 }
 
-{
+const removeTodo = {
     type: 'REMOVE_TODO',
     id: 0,
 }
 
-{
+const toggleTodo = {
     type: 'TOGGGLE_TODO',  
     id: 0,
 }
 
-{
+const addGoal = {
     type: 'ADD_GOAL',
     goal: {
         id: 0,
@@ -26,7 +26,7 @@
     }
 }
 
-{
+const removeGoal = {
     type: 'REMOVE_GOAL',
     id: 0,
 }
@@ -41,9 +41,14 @@
 function todos (state = [], action) {
     if (action.type === 'ADD_TODO') {
         return state.concat([action.todo])
+    } else if (action.type === 'REMOVE_TODO') {
+        return state.filter((todo) => todo.id !== action.id)
+    } else if (action.type === 'TOGGLE_TODO') {
+        return state.map((todo) => todo.id !== action.id ? todo : 
+        {...todo, complete: [!todo.complete]})
+    } else {
+        return state
     }
-
-    return state
 }
 
 // store
