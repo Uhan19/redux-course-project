@@ -14,7 +14,7 @@ const removeTodo = {
 }
 
 const toggleTodo = {
-    type: 'TOGGGLE_TODO',  
+    type: 'TOGGLE_TODO',  
     id: 0,
 }
 
@@ -45,7 +45,7 @@ function todos (state = [], action) {
         return state.filter((todo) => todo.id !== action.id)
     } else if (action.type === 'TOGGLE_TODO') {
         return state.map((todo) => todo.id !== action.id ? todo : 
-        {...todo, complete: [!todo.complete]})
+        {...todo, complete: !todo.complete})
     } else {
         return state
     }
