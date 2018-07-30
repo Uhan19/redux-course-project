@@ -1,75 +1,4 @@
-// actions - whenever we want to change the state of app, we dispatch an action
-const addTodo = {
-    type: 'ADD_TODO',
-    todo: {
-        id: 0,
-        name: 'Learn Redux',
-        complete: false,
-    }
-}
-
-const removeTodo = {
-    type: 'REMOVE_TODO',
-    id: 0,
-}
-
-const toggleTodo = {
-    type: 'TOGGLE_TODO',  
-    id: 0,
-}
-
-const addGoal = {
-    type: 'ADD_GOAL',
-    goal: {
-        id: 0,
-        name: 'Run a Marathon', 
-    }
-}
-
-const removeGoal = {
-    type: 'REMOVE_GOAL',
-    id: 0,
-}
-
-// reducers
-    // has to be pure functions 
-    /* Characteristics of a Pure Function 
-        1. They always return the same result if the same arguments are passed in.
-        2. They depend only on the arguments passed into them. 
-        3. Never produce any side effects. 
-    */
-function todos (state = [], action) {
-    switch(action.type) {
-        case 'ADD_TODO': 
-            return state.concat([action.todo])
-        case 'REMOVE_TODO': 
-            return state.filter((todo) => todo.id !== action.id)
-        case 'TOGGLE_TODO': 
-            return state.map((todo) => todo.id !== action.id ? todo: 
-        {...todo, complete: !todo.complete})
-        default: 
-            return state
-    }
-}
-
-function goals (state = [], action) {
-    switch(action.type) {
-        case 'ADD_GOAL': 
-            return state.concat([action.goal])
-        case 'REMOVE_GOAL':
-            return state.filter((goal) => goal.id !== action.id)
-        default: 
-        return state
-    }
-}
-
-// root reducer
-function app (state = {}, action) {
-    return {
-        todos: todos(state.todos, action),
-        goals: goals(state.goals, action)
-    }
-}
+// Library code
 
 // store
 function createStore (reducer) {
@@ -105,6 +34,55 @@ function createStore (reducer) {
     }
 }
 
+// App code 
+
+// actions variables 
+const ADD_TODO = 'ADD_TODO';
+const REMOVE_TODO = 'REMOVE_TODO'; 
+const TOGGLE_TODO = 'TOGGLE_TODO';
+const ADD_GOAL = 'ADD_GOAL'; 
+const REMOVE_GOAL = 'REMOVE_GOAL';
+
+// reducers
+    // has to be pure functions 
+    /* Characteristics of a Pure Function 
+        1. They always return the same result if the same arguments are passed in.
+        2. They depend only on the arguments passed into them. 
+        3. Never produce any side effects. 
+    */
+function todos (state = [], action) {
+    switch(action.type) {
+        case ADD_TODO: 
+            return state.concat([action.todo])
+        case REMOVE_TODO: 
+            return state.filter((todo) => todo.id !== action.id)
+        case TOGGLE_TODO: 
+            return state.map((todo) => todo.id !== action.id ? todo: 
+        {...todo, complete: !todo.complete})
+        default: 
+            return state
+    }
+}
+
+function goals (state = [], action) {
+    switch(action.type) {
+        case ADD_GOAL: 
+            return state.concat([action.goal])
+        case REMOVE_GOAL:
+            return state.filter((goal) => goal.id !== action.id)
+        default: 
+        return state
+    }
+}
+
+// root reducer
+function app (state = {}, action) {
+    return {
+        todos: todos(state.todos, action),
+        goals: goals(state.goals, action)
+    }
+}
+
 // commands to run in console
 const store = createStore(app)
 
@@ -113,7 +91,7 @@ store.subscribe(() => {
 })
 
 store.dispatch({
-  type: 'ADD_TODO',
+  type: ADD_TODO,
   todo: {
     id: 0,
     name: 'Walk the dog',
@@ -122,7 +100,7 @@ store.dispatch({
 })
 
 store.dispatch({
-  type: 'ADD_TODO',
+  type: ADD_TODO,
   todo: {
     id: 1,
     name: 'Wash the car',
@@ -131,7 +109,7 @@ store.dispatch({
 })
 
 store.dispatch({
-  type: 'ADD_TODO',
+  type: ADD_TODO,
   todo: {
     id: 2,
     name: 'Go to the gym',
@@ -140,17 +118,17 @@ store.dispatch({
 })
 
 store.dispatch({
-  type: 'REMOVE_TODO',
+  type: REMOVE_TODO,
   id: 1
 })
 
 store.dispatch({
-  type: 'TOGGLE_TODO',
+  type: TOGGLE_TODO,
   id: 0
 })
 
 store.dispatch({
-  type: 'ADD_GOAL',
+  type: ADD_GOAL,
   goal: {
     id: 0,
     name: 'Learn Redux'
@@ -158,7 +136,7 @@ store.dispatch({
 })
 
 store.dispatch({
-  type: 'ADD_GOAL',
+  type: ADD_GOAL,
   goal: {
     id: 1,
     name: 'Lose 20 pounds'
@@ -166,6 +144,6 @@ store.dispatch({
 })
 
 store.dispatch({
-  type: 'REMOVE_GOAL',
+  type: REMOVE_GOAL,
   id: 0
 })
